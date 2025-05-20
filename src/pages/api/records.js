@@ -1,6 +1,6 @@
 import {ObjectId,} from 'mongodb';
-import {getCollection} from "@/utils/functions";
-import { sendMethodNotAllowed, sendOk } from '@/utils/apiMethods';
+import {getCollection} from "../../../utils/apiMethods";
+import { sendMethodNotAllowed, sendOk } from '../../../utils/functions';
 
 const COLLECTION_NAME = 'records';
 
