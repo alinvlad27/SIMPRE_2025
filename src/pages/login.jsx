@@ -18,17 +18,23 @@ export default function Login({ setIsLogin }) {
           });
           const data = await res.json();
           setIsLogin(data);
-          if (!data) localStorage.removeItem('token');
+          if (!data) {
+            localStorage.removeItem('token');
+            router.push('/login');
+          } else {
+            router.push('/notes');
+          }
         } catch (err) {
           setIsLogin(false);
           localStorage.removeItem('token');
+          router.push('/login');
         }
       } else {
         setIsLogin(false);
       }
     };
     checkLogin();
-  }, [setIsLogin]);
+  }, [setIsLogin, router]);
 
   const onChangeInput = (e) => {
     const { name, value } = e.target;
@@ -91,7 +97,7 @@ export default function Login({ setIsLogin }) {
   };
 
   return (
-    <section className="min-h-screen flex items-center justify-center bg-gradient-to-r from-black to-blue-600">
+    <section className="min-h-screen flex items-center justify-center bg-gradient-to-r from-white to-blue-500">
       <div className="bg-white shadow-2xl rounded-lg p-8 max-w-md w-full">
         {showLogin ? (
           <form onSubmit={loginSubmit} className="space-y-4">

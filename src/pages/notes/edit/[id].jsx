@@ -78,44 +78,49 @@ export default function EditNote({ setIsLogin }) {
   };
 
   return (
-    <div className="min-h-screen" style={{ backgroundImage: "url('https://images.unsplash.com/photo-1507521628349-6e9b2556d4c7?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80')", backgroundSize: 'cover', backgroundPosition: 'center' }}>
+    <div className="min-h-screen" style={{ backgroundImage: "url('https://st4.depositphotos.com/18186852/40791/i/450/depositphotos_407914094-stock-photo-bright-colored-sticky-notes-blue.jpg')", backgroundSize: 'cover', backgroundPosition: 'center' }}>
       <NavBar setIsLogin={setIsLogin} />
-      <div className="max-w-2xl mx-auto p-4">
-        <h1 className="text-2xl font-bold mb-4 text-white">Edit Note</h1>
-        {error && <p className="text-red-500 mb-4">{error}</p>}
-        <form onSubmit={handleSubmit} className="bg-gradient-to-b from-black to-blue-900 text-white shadow-md p-6 rounded-lg space-y-6">
+      <div className="max-w-lg mx-auto p-6 mt-8">
+        <h1 className="text-3xl font-bold text-center text-white mb-6 drop-shadow-lg">Edit Note</h1>
+        {error && <p className="text-red-400 text-center mb-4">{error}</p>}
+        <form onSubmit={handleSubmit} className="bg-gradient-to-br from-gray-800 to-blue-900 rounded-xl shadow-2xl p-8 space-y-6">
           <div>
-            <label className="block text-sm font-medium">Title</label>
+            <label className="block text-sm font-medium text-gray-200 mb-2">Title</label>
             <input
               type="text"
               value={title}
               onChange={(e) => setTitle(e.target.value)}
-              className="w-full p-2 border rounded text-black"
+              className="w-full p-3 border border-gray-300 rounded-lg bg-gray-100 text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-300"
+              placeholder="Enter note title"
               required
             />
           </div>
           <div>
-            <label className="block text-sm font-medium">Content</label>
+            <label className="block text-sm font-medium text-gray-200 mb-2">Content</label>
             <textarea
               value={content}
               onChange={(e) => setContent(e.target.value)}
-              className="w-full p-2 border rounded text-black"
+              className="w-full p-3 border border-gray-300 rounded-lg bg-gray-100 text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-300"
               rows="5"
+              placeholder="Write your note here..."
               required
             />
           </div>
           <div>
-            <label className="block text-sm font-medium">Date</label>
+            <label className="block text-sm font-medium text-gray-200 mb-2">Date</label>
             <input
               type="date"
               value={date}
               onChange={(e) => setDate(e.target.value)}
-              className="w-full p-2 border rounded text-black"
+              className="w-full p-3 border border-gray-300 rounded-lg bg-gray-100 text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-300"
               required
             />
           </div>
-          <button type="submit" className="bg-blue-500 text-white p-2 rounded hover:bg-blue-600 w-full">
-            Update
+          <button
+            type="submit"
+            className="w-full bg-blue-600 text-white p-3 rounded-lg hover:bg-blue-700 transition duration-300 shadow-md hover:shadow-lg"
+          >
+            Update Note
           </button>
         </form>
       </div>

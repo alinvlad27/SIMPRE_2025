@@ -14,7 +14,9 @@ export default function MyApp({ Component, pageProps }) {
           });
           const data = await res.json();
           setIsLogin(data);
-          if (!data) localStorage.removeItem('token');
+          if (!data) {
+            localStorage.removeItem('token');
+          }
         } catch (err) {
           setIsLogin(false);
           localStorage.removeItem('token');

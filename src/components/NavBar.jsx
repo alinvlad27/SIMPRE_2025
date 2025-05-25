@@ -14,11 +14,11 @@ export default function NavBar({ setIsLogin }) {
     <nav className="flex justify-between items-center p-4 bg-gradient-to-r from-gray-100 to-white shadow-lg">
       <div className="flex space-x-2">
         <h2 className="text-2xl font-light bg-black text-transparent bg-clip-text">
-          <span className="text-4xl">A</span>plicatie
-        </h2>
-        <h2 className="text-2xl font-light bg-black text-transparent bg-clip-text">
           <span className="text-4xl">C</span>loud
           <span className="text-4xl">C</span>omputing
+        </h2>
+        <h2 className="text-2xl font-light bg-black text-transparent bg-clip-text">
+          <span className="text-4xl">A</span>pp
         </h2>
       </div>
       <ul className="flex space-x-4">

@@ -58,14 +58,14 @@ export default function Notes({ setIsLogin }) {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100" style={{ backgroundImage: "url('https://images.unsplash.com/photo-1507521628349-6e9b2556d4c7?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80')", backgroundSize: 'cover', backgroundPosition: 'center' }}>
+    <div className="min-h-screen" style={{ backgroundImage: "url('https://st4.depositphotos.com/18186852/40791/i/450/depositphotos_407914094-stock-photo-bright-colored-sticky-notes-blue.jpg')", backgroundSize: 'cover', backgroundPosition: 'center' }}>
       <NavBar setIsLogin={setIsLogin} />
-      <section className="max-w-7xl mx-auto mt-4 flex flex-wrap justify-around">
+      <section className="max-w-7xl mx-auto mt-4 flex flex-wrap justify-around p-6">
         {error && <p className="text-red-500 mb-4">{error}</p>}
         {notes.length === 0 ? (
           <div className="text-center w-full">
-            <p className="text-gray-500 mb-4">No notes found. Create a new note!</p>
-            <Link href="/notes/create" className="bg-blue-500 text-white p-2 rounded hover:bg-blue-600">
+            <p className="text-gray-200 text-lg mb-4 drop-shadow-md">No notes found. Create a new note!</p>
+            <Link href="/notes/create" className="bg-blue-600 text-white p-3 rounded-lg hover:bg-blue-700 transition duration-300 shadow-md hover:shadow-lg">
               Create New Note
             </Link>
           </div>
@@ -73,21 +73,21 @@ export default function Notes({ setIsLogin }) {
           notes.map((note) => (
             <div
               key={note._id}
-              className="w-72 bg-blue-900 text-white shadow-md p-4 m-4 relative rounded"
+              className="w-72 bg-gradient-to-br from-gray-800 to-blue-900 text-white shadow-md p-4 m-4 relative rounded-xl"
             >
-              <h4 className="truncate">{note.title}</h4>
+              <h4 className="truncate text-lg font-semibold">{note.title}</h4>
               <div className="h-36 overflow-hidden">
-                <p>{note.content}</p>
+                <p className="text-gray-300">{note.content}</p>
               </div>
               <div className="flex justify-between items-center mt-2">
-                <span className="text-wheat">{formatDate(note.date)}</span>
-                <Link href={`/notes/edit/${note._id}`} className="text-blue-300 hover:text-blue-500">
+                <span className="text-gray-400">{formatDate(note.date)}</span>
+                <Link href={`/notes/edit/${note._id}`} className="text-blue-300 hover:text-blue-500 transition">
                   Edit
                 </Link>
               </div>
               <button
                 onClick={() => deleteNote(note._id)}
-                className="absolute top-0 right-2 text-red-500 font-bold"
+                className="absolute top-0 right-2 text-red-400 font-bold hover:text-red-600 transition"
               >
                 X
               </button>
