@@ -1,3 +1,7 @@
+<h1>SIMPRE-Project</h1>
+<p>Proiect Cloud Computing Vlad Alin-Petrișor</p>
+<p>Grupa 1134</p>
+
 ## 1. INTRODUCERE
 <p>Proiectul „Simpre-2025” este o aplicație web de gestionare a notițelor, dezvoltată folosind Next.js, care permite utilizatorilor să se înregistreze, să se autentifice și să administreze notițe personale (creare, editare, ștergere). Aplicația utilizează MongoDB pentru stocarea datelor și este implementată pe Vercel, fiind accesibilă online. Această documentație oferă o prezentare generală a problemei abordate, structurii API, fluxului de date și reprezentării vizuale a aplicației.</p>
 
@@ -63,3 +67,8 @@ Response: [{
  ```
 
 ## 5. CAPTURI DE ECRAN
+<img src="https://github.com/alinvlad27/SIMPRE_2025/blob/main/img/image1.png" alt="Image 1">
+<img src="https://github.com/alinvlad27/SIMPRE_2025/blob/main/img/image2.png" alt="Image 2">
+<img src="https://github.com/alinvlad27/SIMPRE_2025/blob/main/img/image3.png" alt="Image 3">
+<img src="https://github.com/alinvlad27/SIMPRE_2025/blob/main/img/image4.png" alt="Image 4">
+<img src="https://github.com/alinvlad27/SIMPRE_2025/blob/main/img/image5.png" alt="Image 5">
