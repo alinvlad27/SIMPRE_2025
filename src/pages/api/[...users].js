@@ -11,7 +11,6 @@ export default async function handler(req, res) {
     console.log('Request query:', req.query);
     console.log('Users array:', users);
 
-    // Ignoră segmentul 'users' dacă este primul element și ia al doilea element ca acțiune
     const action = users && users.length > 1 && users[0] === 'users' ? users[1] : (users && users.length > 0 ? users[0] : null);
     console.log('Action:', action);
 
@@ -51,7 +50,7 @@ export default async function handler(req, res) {
         return sendBadRequest(res, 'Incorrect password');
       }
       const payload = { id: user._id.toString(), name: user.username };
-      console.log('JWT_SECRET:', process.env.JWT_SECRET); // Log pentru depanare
+      console.log('JWT_SECRET:', process.env.JWT_SECRET); 
       if (!process.env.JWT_SECRET) {
         return sendServerError(res, 'JWT_SECRET is not defined');
       }

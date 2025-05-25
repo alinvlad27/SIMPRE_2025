@@ -12,7 +12,6 @@ export default async function handler(req, res) {
       await auth(req, res, async () => {
         const { id } = req.query;
         if (id) {
-          // Caută o singură notiță pe baza ID-ului
           if (!ObjectId.isValid(id)) {
             return sendBadRequest(res, 'Invalid note ID');
           }
@@ -23,7 +22,6 @@ export default async function handler(req, res) {
           }
           return sendOk(res, note);
         } else {
-          // Returnează toate notițele utilizatorului
           const notes = await collection.find({ user_id: req.user.id }).toArray();
           console.log('Notes fetched from DB:', notes);
           return sendOk(res, notes);

@@ -71,6 +71,7 @@ export default function Login({ setIsLogin }) {
 
   const loginSubmit = async (e) => {
     e.preventDefault();
+    console.log('Login submit triggered');
     try {
       console.log('Sending request to /api/users/login');
       const res = await fetch('http://localhost:3000/api/users/login', {

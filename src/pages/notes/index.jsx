@@ -58,43 +58,45 @@ export default function Notes({ setIsLogin }) {
   };
 
   return (
-    <div className="min-h-screen" style={{ backgroundImage: "url('https://st4.depositphotos.com/18186852/40791/i/450/depositphotos_407914094-stock-photo-bright-colored-sticky-notes-blue.jpg')", backgroundSize: 'cover', backgroundPosition: 'center' }}>
+    <div className="min-h-screen">
       <NavBar setIsLogin={setIsLogin} />
-      <section className="max-w-7xl mx-auto mt-4 flex flex-wrap justify-around p-6">
-        {error && <p className="text-red-500 mb-4">{error}</p>}
-        {notes.length === 0 ? (
-          <div className="text-center w-full">
-            <p className="text-gray-200 text-lg mb-4 drop-shadow-md">No notes found. Create a new note!</p>
-            <Link href="/notes/create" className="bg-blue-600 text-white p-3 rounded-lg hover:bg-blue-700 transition duration-300 shadow-md hover:shadow-lg">
-              Create New Note
-            </Link>
-          </div>
-        ) : (
-          notes.map((note) => (
-            <div
-              key={note._id}
-              className="w-72 bg-gradient-to-br from-gray-800 to-blue-900 text-white shadow-md p-4 m-4 relative rounded-xl"
-            >
-              <h4 className="truncate text-lg font-semibold">{note.title}</h4>
-              <div className="h-36 overflow-hidden">
-                <p className="text-gray-300">{note.content}</p>
-              </div>
-              <div className="flex justify-between items-center mt-2">
-                <span className="text-gray-400">{formatDate(note.date)}</span>
-                <Link href={`/notes/edit/${note._id}`} className="text-blue-300 hover:text-blue-500 transition">
-                  Edit
-                </Link>
-              </div>
-              <button
-                onClick={() => deleteNote(note._id)}
-                className="absolute top-0 right-2 text-red-400 font-bold hover:text-red-600 transition"
-              >
-                X
-              </button>
+      <div className="min-h-[calc(100vh-64px)] flex items-center justify-center bg-gradient-to-r from-white to-blue-500">
+        <section className="max-w-7xl mx-auto mt-4 flex flex-wrap justify-around p-6">
+          {error && <p className="text-red-500 mb-4">{error}</p>}
+          {notes.length === 0 ? (
+            <div className="text-center w-full">
+              <p className="text-gray-200 text-lg mb-4 drop-shadow-md">No notes found. Create a new note!</p>
+              <Link href="/notes/create" className="bg-blue-600 text-white p-3 rounded-lg hover:bg-blue-700 transition duration-300 shadow-md hover:shadow-lg">
+                Create New Note
+              </Link>
             </div>
-          ))
-        )}
-      </section>
+          ) : (
+            notes.map((note) => (
+              <div
+                key={note._id}
+                className="w-72 bg-gradient-to-br from-gray-800 to-blue-900 text-white shadow-md p-4 m-4 relative rounded-xl"
+              >
+                <h4 className="truncate text-lg font-semibold">{note.title}</h4>
+                <div className="h-36 overflow-hidden">
+                  <p className="text-gray-300">{note.content}</p>
+                </div>
+                <div className="flex justify-between items-center mt-2">
+                  <span className="text-gray-400">{formatDate(note.date)}</span>
+                  <Link href={`/notes/edit/${note._id}`} className="text-blue-300 hover:text-blue-500 transition">
+                    Edit
+                  </Link>
+                </div>
+                <button
+                  onClick={() => deleteNote(note._id)}
+                  className="absolute top-0 right-2 text-red-400 font-bold hover:text-red-600 transition"
+                >
+                  X
+                </button>
+              </div>
+            ))
+          )}
+        </section>
+      </div>
     </div>
   );
 }
