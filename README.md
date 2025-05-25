@@ -16,25 +16,65 @@ bun dev
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
 
-[API routes](https://nextjs.org/docs/pages/building-your-application/routing/api-routes) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
+## 1. INTRODUCERE
+Proiectul „Simpre-2025” este o aplicație web de gestionare a notițelor, dezvoltată folosind Next.js, care permite utilizatorilor să se înregistreze, să se autentifice și să administreze notițe personale (creare, editare, ștergere). Aplicația utilizează MongoDB pentru stocarea datelor și este implementată pe Vercel, fiind accesibilă online. Această documentație oferă o prezentare generală a problemei abordate, structurii API, fluxului de date și reprezentării vizuale a aplicației.
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/pages/building-your-application/routing/api-routes) instead of React pages.
 
-This project uses [`next/font`](https://nextjs.org/docs/pages/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 2. DESCRIERE PROBLEMĂ
+Problema principală pe care o abordează acest proiect este lipsa unei platforme simple, sigure și accesibile pentru gestionarea notițelor personale online. Multe soluții existente necesită configurări complexe sau nu au interfețe prietenoase cu utilizatorul. Această aplicație își propune să ofere o soluție intuitivă, cu autentificare securizată, asigurând confidențialitatea datelor și ușurința în utilizare, fiind implementată pe o platformă serverless precum Vercel.
 
-## Learn More
 
-To learn more about Next.js, take a look at the following resources:
+## 3. DESCRIERE API
+Aplicația include un API RESTful integrat în Next.js, situat în directorul pages/api/. Principalele endpoint-uri sunt: 
+•	POST /api/users/register: Înregistrează un utilizator nou cu nume de utilizator, email și parolă. 
+•	POST /api/users/login: Autentifică un utilizator și returnează un token JWT. 
+•	GET /api/users/verify: Verifică token-ul JWT pentru cereri autentificate. 
+•	GET /api/noteCtrl: Returnează toate notițele utilizatorului autentificat. 
+•	POST /api/noteCtrl: Creează o notiță nouă. 
+•	PUT /api/noteCtrl: Actualizează o notiță existentă. 
+•	DELETE /api/noteCtrl: Șterge o notiță.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn-pages-router) - an interactive Next.js tutorial.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## 4. FLUX DE DATE
+Aplicația urmează o arhitectură client-server, cu următorul flux de date: 
+•	Exemple de cereri/răspunsuri: 
 
-## Deploy on Vercel
+```bash
+    -Cerere de înregistrare: 
+POST /api/users/register
+Body: { 
+"username": "user1", "email": "user1@example.com", "password":                        "password123" 
+}
+Response (Succes) { 
+    "msg": "Utilizator înregistrat cu succes" 
+  			         } (200 OK)
+Response (Error) { 
+"msg": "Email-ul există deja" 
+      } (400 Bad Request).
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+    -Cerere de autentificare: 
+POST /api/users/login 
+Body:  { 
+        "email": "user1@example.co"password": "password123"
+    	} 
+```
+```bash
+Response (Succes) { 
+ "token": "jwt_token_here" 
+         } (200 OK) 
+Response (Error) { 
+"msg": "Email sau parolă invalidă" \
+ 			      } (400 Bad Request).
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/pages/building-your-application/deploying) for more details.
+    -Cerere de obținere notițe: 
+GET /api/noteCtrl 
+Header: Authorization: Bearer jwt_token_here 
+Response: [{"_id": "note_id", "title": "Notiță 1", "content": "Conținut 1", "date": "2025-05-25"}].
+```
+
+•	Metode HTTP: POST, GET, PUT, DELETE.
+•	Autentificare și autorizare: Utilizează JWT (JSON Web Token) pentru autentificare. Token-ul este generat la autentificare și inclus în antetul Authorization pentru toate cererile protejate. Serviciile utilizate includ MongoDB Atlas pentru stocarea datelor și Vercel pentru implementare.
+
+
+## 5. CAPTURI DE ECRAN
