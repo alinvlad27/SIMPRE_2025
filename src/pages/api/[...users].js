@@ -1,15 +1,25 @@
 import { connectToDatabase } from '../../../lib/mongodb';
+import { ObjectId } from 'mongodb';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import { sendOk, sendBadRequest, sendServerError } from '../../../utils/apiMethods';
 
 export default async function handler(req, res) {
-  const { db } = await connectToDatabase();
-  const { users } = req.query;
-  const action = users[0];
+  try {
+    const { db } = await connectToDatabase();
+    const { users } = req.query;
+    console.log('Request query:', req.query);
+    console.log('Users array:', users);
 
-  if (req.method === 'POST' && action === 'register') {
-    try {
+    // Ignoră segmentul 'users' dacă este primul element și ia al doilea element ca acțiune
+    const action = users && users.length > 1 && users[0] === 'users' ? users[1] : (users && users.length > 0 ? users[0] : null);
+    console.log('Action:', action);
+
+    if (!action) {
+      return sendBadRequest(res, 'No action specified in route');
+    }
+
+    if (req.method === 'POST' && action === 'register') {
       const { username, email, password } = req.body;
       const user = await db.collection('users').findOne({ email });
       if (user) {
@@ -28,13 +38,9 @@ export default async function handler(req, res) {
         updatedAt: new Date(),
       });
       return sendOk(res, { msg: 'Sign up successful' });
-    } catch (err) {
-      return sendServerError(res, err.message);
     }
-  }
 
-  if (req.method === 'POST' && action === 'login') {
-    try {
+    if (req.method === 'POST' && action === 'login') {
       const { email, password } = req.body;
       const user = await db.collection('users').findOne({ email });
       if (!user) {
@@ -45,18 +51,21 @@ export default async function handler(req, res) {
         return sendBadRequest(res, 'Incorrect password');
       }
       const payload = { id: user._id.toString(), name: user.username };
+      console.log('JWT_SECRET:', process.env.JWT_SECRET); // Log pentru depanare
+      if (!process.env.JWT_SECRET) {
+        return sendServerError(res, 'JWT_SECRET is not defined');
+      }
       const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '1d' });
       return sendOk(res, { token });
-    } catch (err) {
-      return sendServerError(res, err.message);
     }
-  }
 
-  if (req.method === 'GET' && action === 'verify') {
-    try {
+    if (req.method === 'GET' && action === 'verify') {
       const token = req.headers.authorization?.replace('Bearer ', '');
       if (!token) {
         return res.status(200).json(false);
+      }
+      if (!process.env.JWT_SECRET) {
+        return sendServerError(res, 'JWT_SECRET is not defined');
       }
       const decoded = jwt.verify(token, process.env.JWT_SECRET);
       const user = await db.collection('users').findOne({ _id: new ObjectId(decoded.id) });
@@ -64,10 +73,11 @@ export default async function handler(req, res) {
         return res.status(200).json(false);
       }
       return res.status(200).json(true);
-    } catch (err) {
-      return res.status(400).json({ msg: err.message });
     }
-  }
 
-  return res.status(404).json({ msg: 'Route not found' });
+    return sendBadRequest(res, `Route not found: /api/users/${action}`);
+  } catch (err) {
+    console.error('API error:', err);
+    return sendServerError(res, err.message);
+  }
 }

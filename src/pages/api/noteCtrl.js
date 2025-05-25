@@ -4,22 +4,32 @@ import { sendOk, sendBadRequest, sendNotFound, sendServerError } from '../../../
 import { auth } from '../../../utils/auth';
 
 export default async function handler(req, res) {
-  const { db } = await connectToDatabase();
-  const collection = db.collection('notes');
+  try {
+    const { db } = await connectToDatabase();
+    const collection = db.collection('notes');
 
-  if (req.method === 'GET') {
-    try {
+    if (req.method === 'GET') {
       await auth(req, res, async () => {
-        const notes = await collection.find({ user_id: req.user.id }).toArray();
-        return sendOk(res, notes);
+        const { id } = req.query;
+        if (id) {
+          // Caută o singură notiță pe baza ID-ului
+          if (!ObjectId.isValid(id)) {
+            return sendBadRequest(res, 'Invalid note ID');
+          }
+          const note = await collection.findOne({ _id: new ObjectId(id), user_id: req.user.id });
+          console.log('Fetched note for ID:', id, 'Result:', note);
+          if (!note) {
+            return sendNotFound(res, 'Note not found or not authorized');
+          }
+          return sendOk(res, note);
+        } else {
+          // Returnează toate notițele utilizatorului
+          const notes = await collection.find({ user_id: req.user.id }).toArray();
+          console.log('Notes fetched from DB:', notes);
+          return sendOk(res, notes);
+        }
       });
-    } catch (err) {
-      return sendServerError(res, err.message);
-    }
-  }
-
-  if (req.method === 'POST') {
-    try {
+    } else if (req.method === 'POST') {
       await auth(req, res, async () => {
         const { title, content, date } = req.body;
         if (!title || !content) {
@@ -37,13 +47,7 @@ export default async function handler(req, res) {
         const result = await collection.insertOne(newNote);
         return sendOk(res, { msg: 'Created a note', ...result });
       });
-    } catch (err) {
-      return sendServerError(res, err.message);
-    }
-  }
-
-  if (req.method === 'PUT') {
-    try {
+    } else if (req.method === 'PUT') {
       await auth(req, res, async () => {
         const { id } = req.query;
         const { title, content, date } = req.body;
@@ -59,13 +63,7 @@ export default async function handler(req, res) {
         }
         return sendOk(res, { msg: 'Note updated' });
       });
-    } catch (err) {
-      return sendServerError(res, err.message);
-    }
-  }
-
-  if (req.method === 'DELETE') {
-    try {
+    } else if (req.method === 'DELETE') {
       await auth(req, res, async () => {
         const { id } = req.query;
         if (!ObjectId.isValid(id)) {
@@ -77,10 +75,11 @@ export default async function handler(req, res) {
         }
         return sendOk(res, { msg: 'Note deleted' });
       });
-    } catch (err) {
-      return sendServerError(res, err.message);
+    } else {
+      return sendBadRequest(res, 'Method not allowed');
     }
+  } catch (err) {
+    console.error('API error:', err);
+    return sendServerError(res, err.message);
   }
-
-  return sendBadRequest(res, 'Method not allowed');
 }

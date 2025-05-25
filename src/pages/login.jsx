@@ -4,6 +4,7 @@ import { useRouter } from 'next/router';
 export default function Login({ setIsLogin }) {
   const [user, setUser] = useState({ name: '', email: '', password: '' });
   const [err, setErr] = useState('');
+  const [success, setSuccess] = useState('');
   const [showLogin, setShowLogin] = useState(true);
   const router = useRouter();
 
@@ -12,7 +13,7 @@ export default function Login({ setIsLogin }) {
       const token = localStorage.getItem('token');
       if (token) {
         try {
-          const res = await fetch('/api/users/verify', {
+          const res = await fetch('http://localhost:3000/api/users/verify', {
             headers: { Authorization: `Bearer ${token}` },
           });
           const data = await res.json();
@@ -33,12 +34,14 @@ export default function Login({ setIsLogin }) {
     const { name, value } = e.target;
     setUser({ ...user, [name]: value });
     setErr('');
+    setSuccess('');
   };
 
   const registerSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await fetch('/api/users/register', {
+      console.log('Sending request to /api/users/register');
+      const res = await fetch('http://localhost:3000/api/users/register', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -47,19 +50,24 @@ export default function Login({ setIsLogin }) {
           password: user.password,
         }),
       });
+      console.log('Response status:', res.status);
       const data = await res.json();
-      setUser({ name: '', email: '', password: '' });
-      setErr(data.msg);
-      if (res.ok) setShowLogin(true);
+      if (res.ok) {
+        setSuccess(data.msg);
+        setTimeout(() => setShowLogin(true), 2000);
+      } else {
+        setErr(data.message || 'Registration failed');
+      }
     } catch (err) {
-      setErr(err.message);
+      setErr('An error occurred. Please try again.');
     }
   };
 
   const loginSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await fetch('/api/users/login', {
+      console.log('Sending request to /api/users/login');
+      const res = await fetch('http://localhost:3000/api/users/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -67,6 +75,7 @@ export default function Login({ setIsLogin }) {
           password: user.password,
         }),
       });
+      console.log('Response status:', res.status);
       const data = await res.json();
       if (res.ok) {
         setUser({ name: '', email: '', password: '' });
@@ -74,10 +83,10 @@ export default function Login({ setIsLogin }) {
         setIsLogin(true);
         router.push('/notes');
       } else {
-        setErr(data.msg);
+        setErr(data.message || 'Login failed');
       }
     } catch (err) {
-      setErr(err.message);
+      setErr('An error occurred. Please try again.');
     }
   };
 
@@ -122,7 +131,7 @@ export default function Login({ setIsLogin }) {
               Sign In
             </button>
             <p className="text-sm text-center">
-              Don&apos;t have an account?{' '}
+              Don't have an account?{' '}
               <span
                 onClick={() => setShowLogin(false)}
                 className="text-blue-500 hover:text-blue-700 cursor-pointer"
@@ -131,6 +140,7 @@ export default function Login({ setIsLogin }) {
               </span>
             </p>
             {err && <p className="text-red-500 text-center">{err}</p>}
+            {success && <p className="text-green-500 text-center">{success}</p>}
           </form>
         ) : (
           <form onSubmit={registerSubmit} className="space-y-4">
@@ -187,6 +197,7 @@ export default function Login({ setIsLogin }) {
               </span>
             </p>
             {err && <p className="text-red-500 text-center">{err}</p>}
+            {success && <p className="text-green-500 text-center">{success}</p>}
           </form>
         )}
       </div>
