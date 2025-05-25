@@ -66,7 +66,7 @@ export default function Notes({ setIsLogin }) {
           {notes.length === 0 ? (
             <div className="text-center w-full">
               <p className="text-gray-200 text-lg mb-4 drop-shadow-md">No notes found. Create a new note!</p>
-              <Link href="/notes/create" className="bg-blue-600 text-white p-3 rounded-lg hover:bg-blue-700 transition duration-300 shadow-md hover:shadow-lg">
+              <Link href="/notes/create" className="bg-black text-white p-3 rounded-lg hover:bg-blue-700 transition duration-300 shadow-md hover:shadow-lg">
                 Create New Note
               </Link>
             </div>
@@ -74,7 +74,7 @@ export default function Notes({ setIsLogin }) {
             notes.map((note) => (
               <div
                 key={note._id}
-                className="w-72 bg-gradient-to-br from-gray-800 to-blue-900 text-white shadow-md p-4 m-4 relative rounded-xl"
+                className="w-72 bg-gradient-to-br from-gray-400 to-blue-800 text-white shadow-md p-4 m-4 relative rounded-xl"
               >
                 <h4 className="truncate text-lg font-semibold">{note.title}</h4>
                 <div className="h-36 overflow-hidden">

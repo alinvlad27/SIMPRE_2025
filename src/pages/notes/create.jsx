@@ -54,7 +54,7 @@ export default function CreateNote({ setIsLogin }) {
       <div className="min-h-[calc(100vh-64px)] flex items-center justify-center bg-gradient-to-r from-white to-blue-400">
         <div className="max-w-2xl mx-auto p-6">
           <h1 className="text-3xl font-bold text-center text-white mb-6 drop-shadow-lg">Create a New Note</h1>
-          <form onSubmit={handleSubmit} className="bg-gradient-to-br from-gray-800 to-blue-900 rounded-xl shadow-2xl p-9 space-y-6">
+          <form onSubmit={handleSubmit} className="bg-gradient-to-br from-gray-400 to-blue-800 rounded-x1 shadow-2xl p-9 space-y-6">
             <div>
               <label className="block text-sm font-medium text-gray-200 mb-2">Title</label>
               <input
@@ -89,7 +89,7 @@ export default function CreateNote({ setIsLogin }) {
             </div>
             <button
               type="submit"
-              className="w-full bg-blue-600 text-white p-3 rounded-lg hover:bg-blue-700 transition duration-300 shadow-md hover:shadow-lg"
+              className="w-full bg-black text-white p-3 rounded-lg hover:bg-blue-700 transition duration-300 shadow-md hover:shadow-lg"
             >
               Create Note
             </button>

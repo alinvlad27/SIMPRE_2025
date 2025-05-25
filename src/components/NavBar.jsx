@@ -21,26 +21,26 @@ export default function NavBar({ setIsLogin }) {
           <span className="text-4xl">A</span>pp
         </h2>
       </div>
-      <ul className="flex space-x-4">
+      <ul className="flex space-x-8">
         <li>
-          <Link href="/notes" className="text-xl text-black hover:text-green-500 transition">
+          <Link href="/notes" className="text-x1 text-black hover:text-green-500 transition">
             Home
           </Link>
         </li>
         <li>
-          <Link href="/notes/create" className="text-xl text-black hover:text-green-500 transition">
+          <Link href="/notes/create" className="text-x1 text-black hover:text-green-500 transition">
             Create Note
           </Link>
         </li>
         <li>
-          <Link href="/notes/about" className="text-xl text-black hover:text-green-500 transition">
+          <Link href="/notes/about" className="text-x1 text-black hover:text-green-500 transition">
             About
           </Link>
         </li>
         <li>
           <button
             onClick={logoutSubmit}
-            className="text-xl text-black hover:text-green-500 transition"
+            className="text-x1 text-black hover:text-green-500 transition"
           >
             Logout
           </button>
