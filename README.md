@@ -58,7 +58,7 @@ GET /api/noteCtrl
 Header: Authorization: Bearer jwt_token_here 
 Response: [{
              "_id": "note_id", "title": "Notiță 1", "content": "Conținut 1", "date": "2025-05-25"
-        }].
+          }].
 ```
 
 ```bash
@@ -72,3 +72,9 @@ Response: [{
 <img src="https://github.com/alinvlad27/SIMPRE_2025/blob/main/img/image3.png" alt="Image 3">
 <img src="https://github.com/alinvlad27/SIMPRE_2025/blob/main/img/image4.png" alt="Image 4">
 <img src="https://github.com/alinvlad27/SIMPRE_2025/blob/main/img/image5.png" alt="Image 5">
+
+
+## 6. REFERINȚE
+## Link youtube : https://www.youtube.com/watch?v=V3hkeqeGBPg
+## Link vercel : https://simpre-2025-one.vercel.app/login
+## Link github : https://github.com/alinvlad27/SIMPRE_2025/tree/main
