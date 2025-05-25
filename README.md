@@ -77,4 +77,4 @@ Response: [{
 ## 6. REFERINȚE
 ## Link youtube : https://www.youtube.com/watch?v=V3hkeqeGBPg
 ## Link vercel : https://simpre-2025-one.vercel.app/login
-## Link github : https://github.com/alinvlad27/SIMPRE_2025/tree/main
+## Link github : https://github.com/alinvlad27/SIMPRE_2025
