@@ -13,7 +13,7 @@ export default function Login({ setIsLogin }) {
       const token = localStorage.getItem('token');
       if (token) {
         try {
-          const res = await fetch('http://localhost:3000/api/users/verify', {
+          const res = await fetch('/api/users/verify', {
             headers: { Authorization: `Bearer ${token}` },
           });
           const data = await res.json();
@@ -47,7 +47,7 @@ export default function Login({ setIsLogin }) {
     e.preventDefault();
     try {
       console.log('Sending request to /api/users/register');
-      const res = await fetch('http://localhost:3000/api/users/register', {
+      const res = await fetch('/api/users/register', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -74,7 +74,7 @@ export default function Login({ setIsLogin }) {
     console.log('Login submit triggered');
     try {
       console.log('Sending request to /api/users/login');
-      const res = await fetch('http://localhost:3000/api/users/login', {
+      const res = await fetch('/api/users/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

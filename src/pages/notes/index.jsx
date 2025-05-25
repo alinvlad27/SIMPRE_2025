@@ -17,7 +17,7 @@ export default function Notes({ setIsLogin }) {
           router.push('/login');
           return;
         }
-        const res = await fetch('http://localhost:3000/api/noteCtrl', {
+        const res = await fetch('/api/noteCtrl', {
           headers: { Authorization: `Bearer ${token}` },
         });
         if (!res.ok) {
